@@ -1,5 +1,7 @@
 package br.com.serratec.serramed.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -27,5 +29,6 @@ public class Funcionario {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "departamento_id")
+    @JsonManagedReference
     private Departamento departamento;
 }

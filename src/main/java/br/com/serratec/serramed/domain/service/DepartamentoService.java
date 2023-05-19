@@ -4,7 +4,7 @@ import br.com.serratec.serramed.domain.exception.NotFoundException;
 import br.com.serratec.serramed.domain.model.Departamento;
 import br.com.serratec.serramed.domain.model.Hospital;
 import br.com.serratec.serramed.domain.repository.DepartamentoRepository;
-import br.com.serratec.serramed.domain.service.CRUD.CRUDService;
+import br.com.serratec.serramed.domain.service.iCrud.ICRUDService;
 import br.com.serratec.serramed.dto.derpartamento.DepartamentoRequestDto;
 import br.com.serratec.serramed.dto.derpartamento.DepartamentoResponseDto;
 
@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class DepartamentoService implements CRUDService<DepartamentoRequestDto, DepartamentoResponseDto> {
+public class DepartamentoService implements ICRUDService<DepartamentoRequestDto, DepartamentoResponseDto> {
 
 	@Autowired
 	private DepartamentoRepository departamentoRepository;
@@ -31,10 +31,10 @@ public class DepartamentoService implements CRUDService<DepartamentoRequestDto, 
 
 	@Override
 	public DepartamentoResponseDto create(DepartamentoRequestDto dto) {
-		Departamento departamento = departamentoRepository.save(mapper.map(dto , Departamento.class));
 		Hospital hospital = hospitalService.findById(dto.getHospitalId());
+		Departamento departamento = mapper.map(dto , Departamento.class);
 		departamento.setHospital(hospital);
-		return mapper.map(departamento , DepartamentoResponseDto.class);
+		return mapper.map(departamentoRepository.save(departamento), DepartamentoResponseDto.class);
 	}
 
 	@Override

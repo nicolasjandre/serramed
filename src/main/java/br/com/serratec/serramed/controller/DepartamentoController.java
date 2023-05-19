@@ -1,6 +1,6 @@
 package br.com.serratec.serramed.controller;
 
-import br.com.serratec.serramed.controller.CRUD.CRUDController;
+import br.com.serratec.serramed.controller.iCrud.ICRUDController;
 import br.com.serratec.serramed.domain.service.DepartamentoService;
 import br.com.serratec.serramed.dto.derpartamento.DepartamentoRequestDto;
 import br.com.serratec.serramed.dto.derpartamento.DepartamentoResponseDto;
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Departamento")
-public class DepartamentoController implements CRUDController<DepartamentoRequestDto, DepartamentoResponseDto> {
+@RequestMapping("/departamento")
+public class DepartamentoController implements ICRUDController<DepartamentoRequestDto, DepartamentoResponseDto> {
 
 
 	@Autowired

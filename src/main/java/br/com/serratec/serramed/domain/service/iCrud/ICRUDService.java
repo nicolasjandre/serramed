@@ -1,8 +1,8 @@
-package br.com.serratec.serramed.domain.service.CRUD;
+package br.com.serratec.serramed.domain.service.iCrud;
 
 import java.util.List;
 
-public interface CRUDService<Req, Res> {
+public interface ICRUDService<Req, Res> {
 
     Res create(Req dto);
 
