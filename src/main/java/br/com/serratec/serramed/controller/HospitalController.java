@@ -2,8 +2,9 @@ package br.com.serratec.serramed.controller;
 
 import br.com.serratec.serramed.controller.CRUD.CRUDController;
 import br.com.serratec.serramed.domain.service.HospitalService;
-import br.com.serratec.serramed.dto.HospitalDto.HospitalRequestDto;
-import br.com.serratec.serramed.dto.HospitalDto.HospitalResponseDto;
+import br.com.serratec.serramed.dto.hospital.HospitalRequestDto;
+import br.com.serratec.serramed.dto.hospital.HospitalResponseDto;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;

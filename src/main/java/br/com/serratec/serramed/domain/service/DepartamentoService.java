@@ -1,11 +1,13 @@
 package br.com.serratec.serramed.domain.service;
 
+import br.com.serratec.serramed.domain.exception.NotFoundException;
 import br.com.serratec.serramed.domain.model.Departamento;
 import br.com.serratec.serramed.domain.model.Hospital;
 import br.com.serratec.serramed.domain.repository.DepartamentoRepository;
 import br.com.serratec.serramed.domain.service.CRUD.CRUDService;
-import br.com.serratec.serramed.dto.DepartamentoDto.DepartamentoRequestDto;
-import br.com.serratec.serramed.dto.DepartamentoDto.DepartamentoResponseDto;
+import br.com.serratec.serramed.dto.derpartamento.DepartamentoRequestDto;
+import br.com.serratec.serramed.dto.derpartamento.DepartamentoResponseDto;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,7 +41,7 @@ public class DepartamentoService implements CRUDService<DepartamentoRequestDto, 
 	public DepartamentoResponseDto findById(Long id) {
 		Optional<Departamento> departamentoOpt = departamentoRepository.findById(id);
 		if(departamentoOpt.isEmpty()){
-			throw new RuntimeException("Departamento de id=[" + id + "] não encontrado");
+			throw new NotFoundException("Departamento de id=[" + id + "] não encontrado");
 		}
 		return mapper.map(departamentoOpt.get(), DepartamentoResponseDto.class);
 	}
