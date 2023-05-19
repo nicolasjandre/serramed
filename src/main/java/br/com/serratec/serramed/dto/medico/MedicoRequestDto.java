@@ -1,4 +1,4 @@
-package br.com.serratec.serramed.dto.medicoDto;
+package br.com.serratec.serramed.dto.medico;
 
 import java.util.List;
 
