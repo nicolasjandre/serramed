@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.serratec.serramed.controller.CRUD.CRUDController;
 import br.com.serratec.serramed.domain.service.MedicoService;
-import br.com.serratec.serramed.dto.medicoDto.MedicoRequestDto;
-import br.com.serratec.serramed.dto.medicoDto.MedicoResponseDto;
+import br.com.serratec.serramed.dto.medico.MedicoRequestDto;
+import br.com.serratec.serramed.dto.medico.MedicoResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
