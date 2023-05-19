@@ -1,6 +1,5 @@
-package br.com.serratec.serramed.dto.DepartamentoDto;
+package br.com.serratec.serramed.dto.derpartamento;
 
-import br.com.serratec.serramed.domain.model.Hospital;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;

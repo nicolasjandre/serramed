@@ -2,8 +2,8 @@ package br.com.serratec.serramed.controller;
 
 import br.com.serratec.serramed.controller.CRUD.CRUDController;
 import br.com.serratec.serramed.domain.service.DepartamentoService;
-import br.com.serratec.serramed.dto.DepartamentoDto.DepartamentoRequestDto;
-import br.com.serratec.serramed.dto.DepartamentoDto.DepartamentoResponseDto;
+import br.com.serratec.serramed.dto.derpartamento.DepartamentoRequestDto;
+import br.com.serratec.serramed.dto.derpartamento.DepartamentoResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

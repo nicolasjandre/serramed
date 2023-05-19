@@ -2,8 +2,9 @@ package br.com.serratec.serramed.domain.service;
 
 import br.com.serratec.serramed.domain.repository.EnderecoRepository;
 import br.com.serratec.serramed.domain.service.CRUD.CRUDService;
-import br.com.serratec.serramed.dto.EnderecoDto.EnderecoRequestDto;
-import br.com.serratec.serramed.dto.EnderecoDto.EnderecoResponseDto;
+import br.com.serratec.serramed.dto.endereco.EnderecoRequestDto;
+import br.com.serratec.serramed.dto.endereco.EnderecoResponseDto;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

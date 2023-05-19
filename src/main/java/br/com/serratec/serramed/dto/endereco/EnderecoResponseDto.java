@@ -1,4 +1,4 @@
-package br.com.serratec.serramed.dto.EnderecoDto;
+package br.com.serratec.serramed.dto.endereco;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

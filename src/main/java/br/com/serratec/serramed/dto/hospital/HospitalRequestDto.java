@@ -1,4 +1,4 @@
-package br.com.serratec.serramed.dto.HospitalDto;
+package br.com.serratec.serramed.dto.hospital;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
