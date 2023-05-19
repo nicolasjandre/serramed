@@ -1,7 +1,7 @@
 package br.com.serratec.serramed.domain.service;
 
 import br.com.serratec.serramed.domain.repository.EnderecoRepository;
-import br.com.serratec.serramed.domain.service.CRUD.CRUDService;
+import br.com.serratec.serramed.domain.service.iCrud.ICRUDService;
 import br.com.serratec.serramed.dto.endereco.EnderecoRequestDto;
 import br.com.serratec.serramed.dto.endereco.EnderecoResponseDto;
 
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class EnderecoService implements CRUDService<EnderecoRequestDto, EnderecoResponseDto> {
+public class EnderecoService implements ICRUDService<EnderecoRequestDto, EnderecoResponseDto> {
 
 	@Autowired
 	private EnderecoRepository enderecoRepository;

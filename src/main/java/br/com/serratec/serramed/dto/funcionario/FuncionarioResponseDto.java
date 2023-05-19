@@ -1,6 +1,4 @@
-package br.com.serratec.serramed.dto.medico;
-
-import java.util.List;
+package br.com.serratec.serramed.dto.funcionario;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -10,14 +8,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class MedicoResponseDto {
+@NoArgsConstructor
+public class FuncionarioResponseDto {
 
     private Long id;
 
     private String nome;
 
     @JsonIgnoreProperties({ "medicos", "funcionarios" })
-    private List<Departamento> departamentos;
+    private Departamento departamento;
 }

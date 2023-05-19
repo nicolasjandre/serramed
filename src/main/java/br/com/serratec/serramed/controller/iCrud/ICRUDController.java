@@ -1,10 +1,10 @@
-package br.com.serratec.serramed.controller.CRUD;
+package br.com.serratec.serramed.controller.iCrud;
 
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
-public interface CRUDController<Req, Res> {
+public interface ICRUDController<Req, Res> {
     
     ResponseEntity<Res> create(Req dto);
 

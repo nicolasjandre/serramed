@@ -1,8 +1,8 @@
 package br.com.serratec.serramed.domain.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,9 +28,13 @@ public class Medico {
 
     private String nome;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "medico_departamento", 
         joinColumns = @JoinColumn(name = "medico_id"), 
         inverseJoinColumns = @JoinColumn(name = "departamento_id"))
-    private List<Departamento> departamentos;
+    private List<Departamento> departamentos = new ArrayList<>();
+
+    public void addDepartamento(Departamento departamento) {
+        this.departamentos.add(departamento);
+    }
 }
