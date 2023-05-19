@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 import br.com.serratec.serramed.domain.model.Medico;
 import br.com.serratec.serramed.domain.repository.MedicoRepository;
 import br.com.serratec.serramed.domain.service.CRUD.CRUDService;
-import br.com.serratec.serramed.dto.medicoDto.MedicoRequestDto;
-import br.com.serratec.serramed.dto.medicoDto.MedicoResponseDto;
+import br.com.serratec.serramed.dto.medico.MedicoRequestDto;
+import br.com.serratec.serramed.dto.medico.MedicoResponseDto;
 
 @Service
 public class MedicoService implements CRUDService<MedicoRequestDto, MedicoResponseDto> {

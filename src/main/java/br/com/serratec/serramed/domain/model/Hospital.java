@@ -27,10 +27,11 @@ public class Hospital {
 
     private String nome;
 
+    @Column(unique = true)
     private String telefone;
 
     @OneToOne
-    @JoinColumn(name = "endereco_id")
+    @JoinColumn(name = "endereco_id", unique = true)
     private Endereco endereco;
 
     @OneToMany(mappedBy = "hospital")
