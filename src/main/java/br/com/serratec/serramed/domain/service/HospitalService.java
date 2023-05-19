@@ -1,7 +1,7 @@
 package br.com.serratec.serramed.domain.service;
 
 import br.com.serratec.serramed.domain.repository.HospitalRepository;
-import br.com.serratec.serramed.domain.service.CRUD.CRUDService;
+import br.com.serratec.serramed.domain.service.iCrud.ICRUDService;
 import br.com.serratec.serramed.dto.hospital.HospitalRequestDto;
 import br.com.serratec.serramed.dto.hospital.HospitalResponseDto;
 
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class HospitalService implements CRUDService<HospitalRequestDto, HospitalResponseDto> {
+public class HospitalService implements ICRUDService<HospitalRequestDto, HospitalResponseDto> {
 
 	@Autowired
 	private HospitalRepository hospitalRepository;

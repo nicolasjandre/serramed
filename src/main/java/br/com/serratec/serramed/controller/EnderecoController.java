@@ -1,6 +1,6 @@
 package br.com.serratec.serramed.controller;
 
-import br.com.serratec.serramed.controller.CRUD.CRUDController;
+import br.com.serratec.serramed.controller.iCrud.ICRUDController;
 import br.com.serratec.serramed.domain.service.EnderecoService;
 import br.com.serratec.serramed.dto.endereco.EnderecoRequestDto;
 import br.com.serratec.serramed.dto.endereco.EnderecoResponseDto;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/endereco")
-public class EnderecoController implements CRUDController<EnderecoRequestDto, EnderecoResponseDto> {
+public class EnderecoController implements ICRUDController<EnderecoRequestDto, EnderecoResponseDto> {
 
 	@Autowired
 	private EnderecoService enderecoService;

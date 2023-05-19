@@ -10,20 +10,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.serratec.serramed.controller.CRUD.CRUDController;
+import br.com.serratec.serramed.controller.iCrud.ICRUDController;
 import br.com.serratec.serramed.domain.service.MedicoService;
 import br.com.serratec.serramed.dto.medico.MedicoRequestDto;
 import br.com.serratec.serramed.dto.medico.MedicoResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/medico")
-public class MedicoController implements CRUDController<MedicoRequestDto, MedicoResponseDto> {
+public class MedicoController implements ICRUDController<MedicoRequestDto, MedicoResponseDto> {
 
     @Autowired
     private MedicoService medicoService;

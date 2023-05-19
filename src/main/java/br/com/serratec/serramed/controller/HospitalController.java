@@ -1,6 +1,6 @@
 package br.com.serratec.serramed.controller;
 
-import br.com.serratec.serramed.controller.CRUD.CRUDController;
+import br.com.serratec.serramed.controller.iCrud.ICRUDController;
 import br.com.serratec.serramed.domain.service.HospitalService;
 import br.com.serratec.serramed.dto.hospital.HospitalRequestDto;
 import br.com.serratec.serramed.dto.hospital.HospitalResponseDto;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/hospital")
-public class HospitalController implements CRUDController<HospitalRequestDto, HospitalResponseDto> {
+public class HospitalController implements ICRUDController<HospitalRequestDto, HospitalResponseDto> {
 
 	@Autowired
 	private HospitalService hospitalService;

@@ -8,17 +8,22 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.serratec.serramed.domain.exception.NotFoundException;
+import br.com.serratec.serramed.domain.model.Departamento;
 import br.com.serratec.serramed.domain.model.Medico;
 import br.com.serratec.serramed.domain.repository.MedicoRepository;
-import br.com.serratec.serramed.domain.service.CRUD.CRUDService;
+import br.com.serratec.serramed.domain.service.iCrud.ICRUDService;
 import br.com.serratec.serramed.dto.medico.MedicoRequestDto;
 import br.com.serratec.serramed.dto.medico.MedicoResponseDto;
 
 @Service
-public class MedicoService implements CRUDService<MedicoRequestDto, MedicoResponseDto> {
+public class MedicoService implements ICRUDService<MedicoRequestDto, MedicoResponseDto> {
 
     @Autowired
     private MedicoRepository medicoRepository;
+
+    @Autowired
+    private DepartamentoService departamentoService;
 
     @Autowired
     private ModelMapper mapper;
@@ -29,14 +34,9 @@ public class MedicoService implements CRUDService<MedicoRequestDto, MedicoRespon
         Medico medico = new Medico();
 
         dto.getListaDepartamentoId().forEach(departamentoId -> {
-
-            // Procurar pelo departamento passando o ID
-            // TODO
-
-            // Setar departamento dentro do objeto médico
-            // TODO
+            Departamento departamento = mapper.map(departamentoService.findById(departamentoId), Departamento.class);
+            medico.addDepartamento(departamento);
         });
-
         medico.setNome(dto.getNome());
 
         return mapper.map(medicoRepository.save(medico), MedicoResponseDto.class);
@@ -62,7 +62,7 @@ public class MedicoService implements CRUDService<MedicoRequestDto, MedicoRespon
         Optional<Medico> medicoOpt = medicoRepository.findById(id);
 
         if (medicoOpt.isEmpty()) {
-            throw new RuntimeException();
+            throw new NotFoundException("Médico de id=[" + id + "] não encontrado");
         }
 
         return mapper.map(medicoOpt.get(), MedicoResponseDto.class);
@@ -70,20 +70,15 @@ public class MedicoService implements CRUDService<MedicoRequestDto, MedicoRespon
 
     @Override
     public MedicoResponseDto updateById(MedicoRequestDto dto, Long id) {
-        
-        Medico medico = this.findById(id);
+
+        Medico medico = mapper.map(this.findById(id), Medico.class);
 
         dto.getListaDepartamentoId().forEach(departamentoId -> {
-
-            // Procurar pelo departamento passando o ID
-            // TODO
-
-            // Setar departamento dentro do objeto médico
-            // TODO
+            Departamento departamento = mapper.map(departamentoService.findById(departamentoId), Departamento.class);
+            medico.addDepartamento(departamento);
         });
-
         medico.setNome(dto.getNome());
 
-        return mapper.map(medico, MedicoResponseDto.class);
+        return mapper.map(medicoRepository.save(medico), MedicoResponseDto.class);
     }
 }
