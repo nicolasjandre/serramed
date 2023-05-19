@@ -1,4 +1,4 @@
-package br.com.serratec.serramed.dto.DepartamentoDto;
+package br.com.serratec.serramed.dto.derpartamento;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

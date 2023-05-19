@@ -2,8 +2,9 @@ package br.com.serratec.serramed.controller;
 
 import br.com.serratec.serramed.controller.CRUD.CRUDController;
 import br.com.serratec.serramed.domain.service.EnderecoService;
-import br.com.serratec.serramed.dto.EnderecoDto.EnderecoRequestDto;
-import br.com.serratec.serramed.dto.EnderecoDto.EnderecoResponseDto;
+import br.com.serratec.serramed.dto.endereco.EnderecoRequestDto;
+import br.com.serratec.serramed.dto.endereco.EnderecoResponseDto;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -2,8 +2,9 @@ package br.com.serratec.serramed.domain.service;
 
 import br.com.serratec.serramed.domain.repository.HospitalRepository;
 import br.com.serratec.serramed.domain.service.CRUD.CRUDService;
-import br.com.serratec.serramed.dto.HospitalDto.HospitalRequestDto;
-import br.com.serratec.serramed.dto.HospitalDto.HospitalResponseDto;
+import br.com.serratec.serramed.dto.hospital.HospitalRequestDto;
+import br.com.serratec.serramed.dto.hospital.HospitalResponseDto;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

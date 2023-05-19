@@ -1,4 +1,4 @@
-package br.com.serratec.serramed.dto.EnderecoDto;
+package br.com.serratec.serramed.dto.endereco;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
