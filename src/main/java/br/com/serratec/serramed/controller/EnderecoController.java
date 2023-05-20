@@ -5,10 +5,12 @@ import br.com.serratec.serramed.domain.service.EnderecoService;
 import br.com.serratec.serramed.dto.endereco.EnderecoRequestDto;
 import br.com.serratec.serramed.dto.endereco.EnderecoResponseDto;
 
+import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,27 +22,37 @@ public class EnderecoController implements ICRUDController<EnderecoRequestDto, E
 	private EnderecoService enderecoService;
 
 	@Override
-	public ResponseEntity<EnderecoResponseDto> create(EnderecoRequestDto dto) {
-		return null;
+	@PutMapping
+	@Operation(summary = "Cria um endereço novo", description = "Campo 'nome' não pode estar vazio.")
+	public ResponseEntity<EnderecoResponseDto> create(@Valid @RequestBody EnderecoRequestDto dto) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(enderecoService.create(dto));
 	}
 
 	@Override
-	public ResponseEntity<EnderecoResponseDto> findById(Long id) {
-		return null;
+	@GetMapping("/{id}")
+	@Operation(summary = "Retorna um endereço específico pelo ID", description ="Verifica se o 'ID' passado no parâmetro existe." )
+	public ResponseEntity<EnderecoResponseDto> findById(@PathVariable Long id) {
+		return ResponseEntity.status(HttpStatus.OK).body(enderecoService.findById(id));
 	}
 
 	@Override
+	@GetMapping
+	@Operation(summary = "Retorna todos os endereços cadastrados")
 	public ResponseEntity<List<EnderecoResponseDto>> findAll() {
-		return null;
+		return ResponseEntity.status(HttpStatus.OK).body(enderecoService.findAll());
 	}
 
 	@Override
-	public ResponseEntity<EnderecoResponseDto> updateById(EnderecoRequestDto dto, Long id) {
-		return null;
+	@PutMapping("/{id}")
+	@Operation(summary = "Atualiza todas as propriedades do endereço.", description = "Verifica se o 'ID' passado no parâmetro existe.")
+	public ResponseEntity<EnderecoResponseDto> updateById(@Valid @RequestBody EnderecoRequestDto dto, Long id) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(enderecoService.updateById(dto,id));
 	}
 
 	@Override
-	public ResponseEntity<Void> deleteById(Long id) {
-		return null;
+	@DeleteMapping("/{id}")
+	@Operation(summary = "Deleta um endereço", description = "Verifica se o 'ID' passado no parâmetro existe.")
+	public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
 	}
 }
