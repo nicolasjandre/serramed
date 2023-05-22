@@ -2,7 +2,7 @@ package br.com.serratec.serramed.dto.funcionario;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import br.com.serratec.serramed.domain.model.Departamento;
+import br.com.serratec.serramed.dto.derpartamento.DepartamentoResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,5 +17,5 @@ public class FuncionarioResponseDto {
     private String nome;
 
     @JsonIgnoreProperties({ "medicos", "funcionarios" })
-    private Departamento departamento;
+    private DepartamentoResponseDto departamento;
 }

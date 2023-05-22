@@ -70,6 +70,7 @@ public class FuncionarioController implements ICRUDController<FuncionarioRequest
             "<br>Campo 'departamentoId' não pode ser nulo")
     public ResponseEntity<FuncionarioResponseDto> updateById(@RequestBody @Valid FuncionarioRequestDto dto,
             @PathVariable Long id) {
+                funcionarioService.deleteById(id);
         return ResponseEntity.status(HttpStatus.OK).body(funcionarioService.updateById(dto, id));
     }
 }

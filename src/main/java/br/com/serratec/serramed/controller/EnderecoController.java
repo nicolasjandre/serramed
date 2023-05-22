@@ -22,7 +22,7 @@ public class EnderecoController implements ICRUDController<EnderecoRequestDto, E
 	private EnderecoService enderecoService;
 
 	@Override
-	@PutMapping
+	@PostMapping
 	@Operation(summary = "Cria um endereço novo", description = "Campo 'nome' não pode estar vazio.")
 	public ResponseEntity<EnderecoResponseDto> create(@Valid @RequestBody EnderecoRequestDto dto) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(enderecoService.create(dto));
@@ -53,6 +53,7 @@ public class EnderecoController implements ICRUDController<EnderecoRequestDto, E
 	@DeleteMapping("/{id}")
 	@Operation(summary = "Deleta um endereço", description = "Verifica se o 'ID' passado no parâmetro existe.")
 	public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+		enderecoService.deleteById(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
 	}
 }

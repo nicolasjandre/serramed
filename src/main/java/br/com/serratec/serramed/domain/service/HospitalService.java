@@ -1,6 +1,7 @@
 package br.com.serratec.serramed.domain.service;
 
 import br.com.serratec.serramed.domain.exception.NotFoundException;
+import br.com.serratec.serramed.domain.model.Endereco;
 import br.com.serratec.serramed.domain.model.Hospital;
 import br.com.serratec.serramed.domain.repository.HospitalRepository;
 import br.com.serratec.serramed.domain.service.iCrud.ICRUDService;
@@ -26,7 +27,11 @@ public class HospitalService implements ICRUDService<HospitalRequestDto, Hospita
 
 	@Override
 	public HospitalResponseDto create(HospitalRequestDto dto) {
+		Endereco endereco = mapper.map(dto.getEndereco(), Endereco.class);
+		
 		Hospital hospital = mapper.map(dto, Hospital.class);
+		hospital.setEndereco(endereco);
+
 		return mapper.map(hospitalRepository.save(hospital),
 				HospitalResponseDto.class);
 	}
@@ -50,9 +55,13 @@ public class HospitalService implements ICRUDService<HospitalRequestDto, Hospita
 	@Override
 	public HospitalResponseDto updateById(HospitalRequestDto dto, Long id) {
 		this.findById(id);
-		Hospital hospital = mapper.map(dto,Hospital.class);
+		Endereco endereco = mapper.map(dto.getEndereco(), Endereco.class);
+		Hospital hospital = mapper.map(dto, Hospital.class);
 		hospital.setId(id);
-		return mapper.map(hospitalRepository.save(hospital),HospitalResponseDto.class);
+		hospital.setEndereco(endereco);
+
+		return mapper.map(hospitalRepository.save(hospital),
+				HospitalResponseDto.class);
 	}
 
 	@Override

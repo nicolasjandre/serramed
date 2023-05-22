@@ -24,5 +24,4 @@ public class EnderecoResponseDto {
 	private String estado;
 
 	private String cep;
-
 }

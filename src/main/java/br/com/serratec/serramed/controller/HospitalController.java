@@ -44,7 +44,7 @@ public class HospitalController implements ICRUDController<HospitalRequestDto, H
 	@Override
 	@PutMapping("/{id}")
 	@Operation(summary = "Atualiza todas as propriedades do hospital.", description = "Verifica se o 'ID' passado no parâmetro existe.")
-	public ResponseEntity<HospitalResponseDto> updateById(@Valid @RequestBody HospitalRequestDto dto, Long id) {
+	public ResponseEntity<HospitalResponseDto> updateById(@Valid @RequestBody HospitalRequestDto dto, @PathVariable Long id) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(hospitalService.updateById(dto, id));
 	}
 
@@ -52,6 +52,7 @@ public class HospitalController implements ICRUDController<HospitalRequestDto, H
 	@DeleteMapping("/{id}")
 	@Operation(summary = "Delela um hospital.", description = "Verifica se o 'ID' passado no parâmetro existe.")
 	public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+		hospitalService.deleteById(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
 	}
 }

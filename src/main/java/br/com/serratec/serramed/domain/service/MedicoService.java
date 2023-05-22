@@ -37,6 +37,7 @@ public class MedicoService implements ICRUDService<MedicoRequestDto, MedicoRespo
             Departamento departamento = mapper.map(departamentoService.findById(departamentoId), Departamento.class);
             medico.addDepartamento(departamento);
         });
+        
         medico.setNome(dto.getNome());
 
         return mapper.map(medicoRepository.save(medico), MedicoResponseDto.class);

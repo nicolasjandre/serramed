@@ -31,6 +31,4 @@ public class EnderecoRequestDto {
 	@NotBlank(message = "Campo 'cep' não pode estar vazio" )
 	@Size(max = 8)
 	private String cep;
-
-	private Long HospitalId;
 }
