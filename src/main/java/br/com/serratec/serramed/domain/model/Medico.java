@@ -1,5 +1,6 @@
 package br.com.serratec.serramed.domain.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Medico {
+public class Medico implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

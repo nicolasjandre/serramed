@@ -20,11 +20,12 @@ public class DepartamentoResponseDto {
 
 	private String nome;
 
+	@JsonIgnoreProperties({ "departamentos", "endereco" })
 	private Hospital hospital;
 
-	@JsonIgnoreProperties("departamentos")
+	@JsonIgnoreProperties({ "departamentos" })
 	private List<Medico> medicos;
 
-	@JsonIgnoreProperties("departamento")
+	@JsonIgnoreProperties({ "departamento" })
 	private List<Funcionario> funcionarios;
 }

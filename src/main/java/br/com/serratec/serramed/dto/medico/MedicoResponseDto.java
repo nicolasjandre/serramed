@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import br.com.serratec.serramed.domain.model.Departamento;
+import br.com.serratec.serramed.dto.derpartamento.DepartamentoResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,5 +19,5 @@ public class MedicoResponseDto {
     private String nome;
 
     @JsonIgnoreProperties({ "medicos", "funcionarios" })
-    private List<Departamento> departamentos;
+    private List<DepartamentoResponseDto> departamentos;
 }

@@ -1,9 +1,11 @@
 package br.com.serratec.serramed.domain.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,7 +22,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Hospital {
+@JsonIgnoreProperties({ "hibernateLazyInitializer" })
+public class Hospital implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,11 +35,14 @@ public class Hospital {
     @Column(unique = true)
     private String telefone;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id", unique = true)
     private Endereco endereco;
 
-    @OneToMany(mappedBy = "hospital")
-    @JsonBackReference
+    @OneToMany(mappedBy = "hospital", cascade = CascadeType.ALL)
     private List<Departamento> departamentos;
+
+    public void addDepartamento(Departamento departamento) {
+        this.departamentos.add(departamento);
+    }
 }

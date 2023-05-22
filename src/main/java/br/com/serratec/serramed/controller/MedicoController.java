@@ -74,6 +74,7 @@ public class MedicoController implements ICRUDController<MedicoRequestDto, Medic
             "<br>Campo 'listaDepartamentoId' não pode ser nulo")
     public ResponseEntity<MedicoResponseDto> updateById(@RequestBody @Valid MedicoRequestDto dto,
             @PathVariable Long id) {
+                medicoService.deleteById(id);
         return ResponseEntity.status(HttpStatus.OK).body(medicoService.updateById(dto, id));
     }
 }

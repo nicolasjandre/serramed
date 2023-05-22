@@ -28,21 +28,23 @@ public class DepartamentoService implements ICRUDService<DepartamentoRequestDto,
 	@Autowired
 	private ModelMapper mapper;
 
-
 	@Override
 	public DepartamentoResponseDto create(DepartamentoRequestDto dto) {
-		Hospital hospital = hospitalService.findById(dto.getHospitalId());
-		Departamento departamento = mapper.map(dto , Departamento.class);
+		Hospital hospital = mapper.map(hospitalService.findById(dto.getHospitalId()), Hospital.class);
+		Departamento departamento = mapper.map(dto, Departamento.class);
 		departamento.setHospital(hospital);
+
 		return mapper.map(departamentoRepository.save(departamento), DepartamentoResponseDto.class);
 	}
 
 	@Override
 	public DepartamentoResponseDto findById(Long id) {
 		Optional<Departamento> departamentoOpt = departamentoRepository.findById(id);
-		if(departamentoOpt.isEmpty()){
+		
+		if (departamentoOpt.isEmpty()) {
 			throw new NotFoundException("Departamento de id=[" + id + "] não encontrado");
 		}
+		
 		return mapper.map(departamentoOpt.get(), DepartamentoResponseDto.class);
 	}
 
@@ -56,10 +58,13 @@ public class DepartamentoService implements ICRUDService<DepartamentoRequestDto,
 	@Override
 	public DepartamentoResponseDto updateById(DepartamentoRequestDto dto, Long id) {
 		this.findById(id);
-		Departamento departamento = mapper.map(dto,Departamento.class);
+		
+		Departamento departamento = mapper.map(dto, Departamento.class);
+		Hospital hospital = mapper.map(hospitalService.findById(dto.getHospitalId()), Hospital.class);
+
 		departamento.setId(id);
-		Hospital hospital = hospitalService.findById(dto.getHospitalId());
 		departamento.setHospital(hospital);
+
 		return mapper.map(departamentoRepository.save(departamento), DepartamentoResponseDto.class);
 	}
 

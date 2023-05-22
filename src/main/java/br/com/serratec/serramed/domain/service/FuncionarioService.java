@@ -31,12 +31,12 @@ public class FuncionarioService implements ICRUDService<FuncionarioRequestDto, F
     @Override
     public FuncionarioResponseDto create(FuncionarioRequestDto dto) {
 
-        Funcionario funcionario = new Funcionario();
+        Funcionario funcionario = mapper.map(dto, Funcionario.class);
 
         Departamento departamento = mapper.map(departamentoService.findById(dto.getDepartamentoId()),
                 Departamento.class);
+                
         funcionario.setDepartamento(departamento);
-        funcionario.setNome(dto.getNome());
 
         return mapper.map(funcionarioRepository.save(funcionario), FuncionarioResponseDto.class);
     }
@@ -74,7 +74,8 @@ public class FuncionarioService implements ICRUDService<FuncionarioRequestDto, F
 
         Departamento departamento = mapper.map(departamentoService.findById(dto.getDepartamentoId()),
                 Departamento.class);
-        funcionario.setDepartamento(departamento);
+        
+                funcionario.setDepartamento(departamento);
         funcionario.setNome(dto.getNome());
 
         return mapper.map(funcionarioRepository.save(funcionario), FuncionarioResponseDto.class);

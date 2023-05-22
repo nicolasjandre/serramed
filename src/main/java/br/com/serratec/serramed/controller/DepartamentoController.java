@@ -53,6 +53,7 @@ public class DepartamentoController implements ICRUDController<DepartamentoReque
 	@DeleteMapping("/{id}")
 	@Operation(summary = "Deleta um departamento.", description = "Verifica se o 'ID' passado no parâmetro existe.")
 	public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+		departamentoService.deleteById(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
 	}
 }
