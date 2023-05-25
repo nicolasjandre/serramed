@@ -58,7 +58,7 @@ public class ResourceHandler {
 
         String errorMessage = ex.getMessage();
 
-        if (ex.getMessage().contains("email_unique")) {
+        if (ex.getMessage().contains("uk_3cs7dxhnine2f6x5ic4741s6e")) {
             errorMessage = "Já existe um usuário cadastrado com este e-mail";
         }
 

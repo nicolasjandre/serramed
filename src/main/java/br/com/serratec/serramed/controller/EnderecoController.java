@@ -1,6 +1,6 @@
 package br.com.serratec.serramed.controller;
 
-import br.com.serratec.serramed.controller.iCrud.ICRUDController;
+import br.com.serratec.serramed.controller.icrud.ICRUDController;
 import br.com.serratec.serramed.domain.service.EnderecoService;
 import br.com.serratec.serramed.dto.endereco.EnderecoRequestDto;
 import br.com.serratec.serramed.dto.endereco.EnderecoResponseDto;

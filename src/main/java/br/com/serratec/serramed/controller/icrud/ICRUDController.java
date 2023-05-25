@@ -1,4 +1,4 @@
-package br.com.serratec.serramed.controller.iCrud;
+package br.com.serratec.serramed.controller.icrud;
 
 import java.util.List;
 

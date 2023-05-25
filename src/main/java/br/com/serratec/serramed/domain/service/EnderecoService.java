@@ -4,7 +4,7 @@ import br.com.serratec.serramed.domain.exception.BadRequestException;
 import br.com.serratec.serramed.domain.exception.NotFoundException;
 import br.com.serratec.serramed.domain.model.Endereco;
 import br.com.serratec.serramed.domain.repository.EnderecoRepository;
-import br.com.serratec.serramed.domain.service.iCrud.ICRUDService;
+import br.com.serratec.serramed.domain.service.icrud.ICRUDService;
 import br.com.serratec.serramed.dto.endereco.EnderecoRequestDto;
 import br.com.serratec.serramed.dto.endereco.EnderecoResponseDto;
 
@@ -30,6 +30,8 @@ public class EnderecoService implements ICRUDService<EnderecoRequestDto, Enderec
 	public EnderecoResponseDto create(EnderecoRequestDto dto) {
 		
 		Endereco endereco = mapper.map(dto, Endereco.class);
+		
+		endereco.setId(null);
 		return mapper.map(enderecoRepository.save(endereco), EnderecoResponseDto.class);
 	}
 

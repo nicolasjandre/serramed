@@ -1,4 +1,4 @@
-package br.com.serratec.serramed.domain.service.iCrud;
+package br.com.serratec.serramed.domain.service.icrud;
 
 import java.util.List;
 

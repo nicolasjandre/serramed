@@ -4,7 +4,7 @@ import br.com.serratec.serramed.domain.exception.NotFoundException;
 import br.com.serratec.serramed.domain.model.Departamento;
 import br.com.serratec.serramed.domain.model.Hospital;
 import br.com.serratec.serramed.domain.repository.DepartamentoRepository;
-import br.com.serratec.serramed.domain.service.iCrud.ICRUDService;
+import br.com.serratec.serramed.domain.service.icrud.ICRUDService;
 import br.com.serratec.serramed.dto.derpartamento.DepartamentoRequestDto;
 import br.com.serratec.serramed.dto.derpartamento.DepartamentoResponseDto;
 
@@ -34,6 +34,7 @@ public class DepartamentoService implements ICRUDService<DepartamentoRequestDto,
 		Departamento departamento = mapper.map(dto, Departamento.class);
 		departamento.setHospital(hospital);
 
+		departamento.setId(null);
 		return mapper.map(departamentoRepository.save(departamento), DepartamentoResponseDto.class);
 	}
 
