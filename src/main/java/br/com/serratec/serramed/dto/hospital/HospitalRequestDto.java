@@ -2,6 +2,7 @@ package br.com.serratec.serramed.dto.hospital;
 
 import java.util.List;
 
+import br.com.serratec.serramed.dto.derpartamento.DepartamentoRequestDto;
 import br.com.serratec.serramed.dto.endereco.EnderecoRequestDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -23,6 +24,6 @@ public class HospitalRequestDto {
 	@NotNull(message = "Campo 'endereco' não pode estar vazio")
 	private EnderecoRequestDto endereco;
 
-	@NotNull(message = "Campo 'listaDepartamentoId' não pode estar vazio")
-	private List<Long> listaDepartamentoId;
+	@NotNull(message = "Campo 'departamentos' não pode estar vazio")
+	private List<DepartamentoRequestDto> departamentos;
 }

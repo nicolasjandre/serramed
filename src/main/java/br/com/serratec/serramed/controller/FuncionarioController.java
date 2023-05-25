@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.serratec.serramed.controller.iCrud.ICRUDController;
+import br.com.serratec.serramed.controller.icrud.ICRUDController;
 import br.com.serratec.serramed.domain.service.FuncionarioService;
 import br.com.serratec.serramed.dto.funcionario.FuncionarioRequestDto;
 import br.com.serratec.serramed.dto.funcionario.FuncionarioResponseDto;

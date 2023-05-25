@@ -12,7 +12,7 @@ import br.com.serratec.serramed.domain.exception.NotFoundException;
 import br.com.serratec.serramed.domain.model.Departamento;
 import br.com.serratec.serramed.domain.model.Medico;
 import br.com.serratec.serramed.domain.repository.MedicoRepository;
-import br.com.serratec.serramed.domain.service.iCrud.ICRUDService;
+import br.com.serratec.serramed.domain.service.icrud.ICRUDService;
 import br.com.serratec.serramed.dto.medico.MedicoRequestDto;
 import br.com.serratec.serramed.dto.medico.MedicoResponseDto;
 
@@ -40,6 +40,7 @@ public class MedicoService implements ICRUDService<MedicoRequestDto, MedicoRespo
         
         medico.setNome(dto.getNome());
 
+        medico.setId(null);
         return mapper.map(medicoRepository.save(medico), MedicoResponseDto.class);
     }
 

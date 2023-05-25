@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,9 @@ public class Medico implements Serializable {
     private Long id;
 
     private String nome;
+
+    @OneToOne(mappedBy = "medico")
+    private Login login;
 
     @ManyToMany
     @JoinTable(name = "medico_departamento", 

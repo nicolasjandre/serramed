@@ -1,6 +1,6 @@
 package br.com.serratec.serramed.controller;
 
-import br.com.serratec.serramed.controller.iCrud.ICRUDController;
+import br.com.serratec.serramed.controller.icrud.ICRUDController;
 import br.com.serratec.serramed.domain.service.DepartamentoService;
 import br.com.serratec.serramed.dto.derpartamento.DepartamentoRequestDto;
 import br.com.serratec.serramed.dto.derpartamento.DepartamentoResponseDto;

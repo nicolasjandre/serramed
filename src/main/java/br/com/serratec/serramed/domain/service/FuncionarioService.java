@@ -12,7 +12,7 @@ import br.com.serratec.serramed.domain.exception.NotFoundException;
 import br.com.serratec.serramed.domain.model.Departamento;
 import br.com.serratec.serramed.domain.model.Funcionario;
 import br.com.serratec.serramed.domain.repository.FuncionarioRepository;
-import br.com.serratec.serramed.domain.service.iCrud.ICRUDService;
+import br.com.serratec.serramed.domain.service.icrud.ICRUDService;
 import br.com.serratec.serramed.dto.funcionario.FuncionarioRequestDto;
 import br.com.serratec.serramed.dto.funcionario.FuncionarioResponseDto;
 
@@ -38,6 +38,7 @@ public class FuncionarioService implements ICRUDService<FuncionarioRequestDto, F
                 
         funcionario.setDepartamento(departamento);
 
+        funcionario.setId(null);
         return mapper.map(funcionarioRepository.save(funcionario), FuncionarioResponseDto.class);
     }
 
