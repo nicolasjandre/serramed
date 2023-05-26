@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import br.com.serratec.serramed.domain.model.Departamento;
-import br.com.serratec.serramed.domain.model.Endereco;
+import br.com.serratec.serramed.dto.derpartamento.DepartamentoResponseDto;
+import br.com.serratec.serramed.dto.endereco.EnderecoResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,8 +22,8 @@ public class HospitalResponseDto {
     private String telefone;
 
     @JsonIgnoreProperties({ "hospital" })
-    private Endereco endereco;
+    private EnderecoResponseDto endereco;
 
     @JsonIgnoreProperties({ "hospital", "medicos", "funcionarios" })
-    private List<Departamento> departamentos;
+    private List<DepartamentoResponseDto> departamentos;
 }

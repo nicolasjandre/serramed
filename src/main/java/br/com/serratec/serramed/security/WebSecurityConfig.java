@@ -42,7 +42,7 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(AUTH_SWAGGER_LIST).permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/login/auth").permitAll()
                         .anyRequest().authenticated())
                 .cors(cors -> cors.disable())
                 .csrf(csrf -> csrf.disable())
@@ -56,5 +56,4 @@ public class WebSecurityConfig {
 
         return http.build();
     }
-
 }

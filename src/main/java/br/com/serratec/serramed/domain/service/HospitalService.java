@@ -1,6 +1,7 @@
 package br.com.serratec.serramed.domain.service;
 
 import br.com.serratec.serramed.domain.exception.NotFoundException;
+import br.com.serratec.serramed.domain.model.Departamento;
 import br.com.serratec.serramed.domain.model.Endereco;
 import br.com.serratec.serramed.domain.model.Hospital;
 import br.com.serratec.serramed.domain.repository.HospitalRepository;
@@ -28,9 +29,10 @@ public class HospitalService implements ICRUDService<HospitalRequestDto, Hospita
 	@Override
 	public HospitalResponseDto create(HospitalRequestDto dto) {
 		Endereco endereco = mapper.map(dto.getEndereco(), Endereco.class);
-		
+
 		Hospital hospital = mapper.map(dto, Hospital.class);
 		hospital.getDepartamentos().forEach(departamento -> departamento.setHospital(hospital));
+		endereco.setEstado(endereco.getEstado().toUpperCase());
 		hospital.setEndereco(endereco);
 
 		hospital.setId(null);
@@ -41,10 +43,10 @@ public class HospitalService implements ICRUDService<HospitalRequestDto, Hospita
 	@Override
 	public HospitalResponseDto findById(Long id) {
 		Optional<Hospital> hospitalOpt = hospitalRepository.findById(id);
-		if (hospitalOpt.isEmpty()){
-			throw  new NotFoundException("Hospital de id=[" + id + "] não encontrado");
+		if (hospitalOpt.isEmpty()) {
+			throw new NotFoundException("Hospital de id=[" + id + "] não encontrado");
 		}
-		return mapper.map(hospitalOpt.get(),HospitalResponseDto.class);
+		return mapper.map(hospitalOpt.get(), HospitalResponseDto.class);
 	}
 
 	@Override
@@ -56,14 +58,16 @@ public class HospitalService implements ICRUDService<HospitalRequestDto, Hospita
 
 	@Override
 	public HospitalResponseDto updateById(HospitalRequestDto dto, Long id) {
-		
+
 		var hospitalDb = this.findById(id);
 		var hospital = mapper.map(dto, Hospital.class);
 		var endereco = mapper.map(dto.getEndereco(), Endereco.class);
-		
+
 		hospital.setId(id);
 		hospital.setEndereco(endereco);
-		hospital.setDepartamentos(hospitalDb.getDepartamentos());
+		hospital.setDepartamentos(hospitalDb.getDepartamentos().stream()
+				.map(departamento -> mapper.map(departamento, Departamento.class))
+				.collect(Collectors.toList()));
 
 		return mapper.map(hospitalRepository.save(hospital),
 				HospitalResponseDto.class);

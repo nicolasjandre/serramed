@@ -5,6 +5,7 @@ import br.com.serratec.serramed.domain.service.HospitalService;
 import br.com.serratec.serramed.dto.hospital.HospitalRequestDto;
 import br.com.serratec.serramed.dto.hospital.HospitalResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/hospital")
+@Tag(name = "Hospital", description = "Todos os endpoints relacionados a entidade Hospital")
 public class HospitalController implements ICRUDController<HospitalRequestDto, HospitalResponseDto> {
 
 	@Autowired
@@ -44,8 +46,9 @@ public class HospitalController implements ICRUDController<HospitalRequestDto, H
 	@Override
 	@PutMapping("/{id}")
 	@Operation(summary = "Atualiza todas as propriedades do hospital.", description = "Verifica se o 'ID' passado no parâmetro existe.")
-	public ResponseEntity<HospitalResponseDto> updateById(@Valid @RequestBody HospitalRequestDto dto, @PathVariable Long id) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(hospitalService.updateById(dto, id));
+	public ResponseEntity<HospitalResponseDto> updateById(@Valid @RequestBody HospitalRequestDto dto,
+			@PathVariable Long id) {
+		return ResponseEntity.status(HttpStatus.OK).body(hospitalService.updateById(dto, id));
 	}
 
 	@Override

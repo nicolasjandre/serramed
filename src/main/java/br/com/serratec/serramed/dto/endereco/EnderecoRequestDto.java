@@ -26,9 +26,10 @@ public class EnderecoRequestDto {
 	private String cidade;
 
 	@NotBlank(message = "Campo 'estado' não pode estar vazio")
+	@Size(min = 2, max = 2, message = "Campo 'estado' deve ter 2 caracteres")
 	private String estado;
 
 	@NotBlank(message = "Campo 'cep' não pode estar vazio" )
-	@Size(max = 8)
+	@Size(min = 8, max = 8, message = "Campo 'cep' precisa ter 8 dígitos")
 	private String cep;
 }

@@ -26,64 +26,64 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private AuthenticationManager authenticationManager;
+	private AuthenticationManager authenticationManager;
 
-    private JwtUtils jwtUtils;
+	private JwtUtils jwtUtils;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
-        super();
-        this.authenticationManager = authenticationManager;
-        this.jwtUtils = jwtUtils;
+	public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
+		super();
+		this.authenticationManager = authenticationManager;
+		this.jwtUtils = jwtUtils;
 
-        setFilterProcessesUrl("/login/auth");
-    }
+		setFilterProcessesUrl("/login/auth");
+	}
 
-    @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-            throws AuthenticationException {
+	@Override
+	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
+			throws AuthenticationException {
 
-        try {
-            LoginRequestDto loginRequestDto = new ObjectMapper().readValue(request.getInputStream(),
-                    LoginRequestDto.class);
+		try {
+			LoginRequestDto loginRequestDto = new ObjectMapper().readValue(request.getInputStream(),
+					LoginRequestDto.class);
 
-            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                    loginRequestDto.getEmail(), loginRequestDto.getPassword());
+			UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+					loginRequestDto.getEmail(), loginRequestDto.getPassword());
 
-            return authenticationManager.authenticate(authToken);
-        } catch (BadCredentialsException ex) {
-            throw new BadCredentialsException("Usuário ou senha inválidos");
-        } catch (Exception ex) {
-            throw new InternalAuthenticationServiceException(ex.getMessage());
-        }
-    }
+			return authenticationManager.authenticate(authToken);
+		} catch (BadCredentialsException ex) {
+			throw new BadCredentialsException("Usuário ou senha inválidos");
+		} catch (Exception ex) {
+			throw new InternalAuthenticationServiceException(ex.getMessage());
+		}
+	}
 
-    @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-            Authentication authResult) throws IOException, ServletException {
+	@Override
+	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
+			Authentication authResult) throws IOException, ServletException {
 
-        String token = jwtUtils.generateToken(authResult);
+		String token = jwtUtils.generateToken(authResult);
 
-        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
-        response.getWriter().write(new Gson().toJson(LoginResponseDto.builder()
-                .token(token)
-                .type("Bearer")
-                .build()));
-    }
+		response.getWriter().write(new Gson().toJson(LoginResponseDto.builder()
+				.token(token)
+				.type("Bearer")
+				.build()));
+	}
 
-    @Override
-    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-            AuthenticationException failed) throws IOException, ServletException {
+	@Override
+	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+			AuthenticationException failed) throws IOException, ServletException {
 
-        response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+		response.setStatus(HttpStatus.UNAUTHORIZED.value());
+		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
-        response.getWriter().write(new Gson().toJson(ErrorResponseDto.builder()
-                .message(failed.getMessage())
-                .statusCode(HttpStatus.UNAUTHORIZED.value())
-                .httpStatus(HttpStatus.UNAUTHORIZED)
-                .build()));
-    }
+		response.getWriter().write(new Gson().toJson(ErrorResponseDto.builder()
+				.message(failed.getMessage())
+				.statusCode(HttpStatus.UNAUTHORIZED.value())
+				.httpStatus(HttpStatus.UNAUTHORIZED)
+				.build()));
+	}
 }

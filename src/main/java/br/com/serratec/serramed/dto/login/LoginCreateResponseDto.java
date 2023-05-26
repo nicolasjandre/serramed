@@ -2,8 +2,8 @@ package br.com.serratec.serramed.dto.login;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import br.com.serratec.serramed.domain.model.Funcionario;
-import br.com.serratec.serramed.domain.model.Medico;
+import br.com.serratec.serramed.dto.funcionario.FuncionarioResponseDto;
+import br.com.serratec.serramed.dto.medico.MedicoResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,8 +18,8 @@ public class LoginCreateResponseDto {
     private String email;
 
     @JsonIgnoreProperties({ "login", "departamentos" })
-    private Medico medico;
+    private MedicoResponseDto medico;
 
     @JsonIgnoreProperties({ "login", "departamento" })
-    private Funcionario funcionario;
+    private FuncionarioResponseDto funcionario;
 }

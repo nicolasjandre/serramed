@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.google.gson.Gson;
 
 import br.com.serratec.serramed.dto.error.ErrorResponseDto;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,6 +29,8 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         if (authException.getMessage()
                 .equals("Full authentication is required to access this resource")) {
             message = "É necessário estar autenticado para utilizar este recurso";
+        } else if (authException.getCause() instanceof ExpiredJwtException) {
+            message = "Token JWT expirado";
         }
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
