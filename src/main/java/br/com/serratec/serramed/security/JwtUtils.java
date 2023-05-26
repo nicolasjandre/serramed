@@ -3,6 +3,7 @@ package br.com.serratec.serramed.security;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
+import java.util.Objects;
 
 import javax.crypto.SecretKey;
 
@@ -32,7 +33,7 @@ public class JwtUtils {
 
         try {
 
-            Key secretKey = Keys.hmacShaKeyFor(secret.getBytes("UTF-8"));
+            Key secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
 
             return Jwts.builder()
                     .setIssuer("Serramed API")
@@ -50,7 +51,7 @@ public class JwtUtils {
 
         Claims claims = getClaims(token);
 
-        if (claims.isEmpty()) {
+        if (Objects.isNull(claims)) {
             return false;
         }
 
@@ -64,7 +65,7 @@ public class JwtUtils {
 
         Claims claims = getClaims(token);
 
-        if (claims.isEmpty()) {
+        if (Objects.isNull(claims)) {
             return null;
         }
 
@@ -81,7 +82,7 @@ public class JwtUtils {
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            return Jwts.claims(null);
+            return null;
         }
     }
 }

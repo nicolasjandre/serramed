@@ -60,6 +60,8 @@ public class ResourceHandler {
 
         if (ex.getMessage().contains("uk_3cs7dxhnine2f6x5ic4741s6e")) {
             errorMessage = "Já existe um usuário cadastrado com este e-mail";
+        } else if (ex.getMessage().contains("uk_7iep5wulc2ip6vq0evp62eeec")) {
+            errorMessage = "Já existe um hospital cadastrado com este telefone";
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponseDto.builder()

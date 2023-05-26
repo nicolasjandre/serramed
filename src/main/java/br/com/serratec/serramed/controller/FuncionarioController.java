@@ -19,10 +19,12 @@ import br.com.serratec.serramed.domain.service.FuncionarioService;
 import br.com.serratec.serramed.dto.funcionario.FuncionarioRequestDto;
 import br.com.serratec.serramed.dto.funcionario.FuncionarioResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/funcionario")
+@Tag(name = "Funcionario", description = "Todos os endpoints relacionados a entidade Funcionario")
 public class FuncionarioController implements ICRUDController<FuncionarioRequestDto, FuncionarioResponseDto> {
 
     @Autowired
@@ -70,7 +72,7 @@ public class FuncionarioController implements ICRUDController<FuncionarioRequest
             "<br>Campo 'departamentoId' não pode ser nulo")
     public ResponseEntity<FuncionarioResponseDto> updateById(@RequestBody @Valid FuncionarioRequestDto dto,
             @PathVariable Long id) {
-                funcionarioService.deleteById(id);
+        funcionarioService.deleteById(id);
         return ResponseEntity.status(HttpStatus.OK).body(funcionarioService.updateById(dto, id));
     }
 }

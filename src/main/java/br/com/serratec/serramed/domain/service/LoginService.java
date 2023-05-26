@@ -18,7 +18,9 @@ import br.com.serratec.serramed.domain.exception.NotFoundException;
 import br.com.serratec.serramed.domain.model.Funcionario;
 import br.com.serratec.serramed.domain.model.Login;
 import br.com.serratec.serramed.domain.model.Medico;
+import br.com.serratec.serramed.domain.repository.FuncionarioRepository;
 import br.com.serratec.serramed.domain.repository.LoginRepository;
+import br.com.serratec.serramed.domain.repository.MedicoRepository;
 import br.com.serratec.serramed.dto.login.LoginCreateRequestDto;
 import br.com.serratec.serramed.dto.login.LoginCreateResponseDto;
 
@@ -29,10 +31,10 @@ public class LoginService implements UserDetailsService {
     private LoginRepository loginRepository;
 
     @Autowired
-    private MedicoService medicoService;
+    private MedicoRepository medicoRepository;
 
     @Autowired
-    private FuncionarioService funcionarioService;
+    private FuncionarioRepository funcionarioRepository;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -68,11 +70,21 @@ public class LoginService implements UserDetailsService {
                 null, null);
 
         if (Objects.nonNull(dto.getMedicoId())) {
-            login.setMedico(mapper.map(medicoService.findById(
-                    dto.getMedicoId()), Medico.class));
+            Optional<Medico> medicoOpt = medicoRepository.findById(dto.getMedicoId());
+
+            if (medicoOpt.isEmpty()) {
+                throw new NotFoundException("Medico de id=[" + dto.getMedicoId() + "] não encontrado");
+            }
+
+            login.setMedico(medicoOpt.get());
         } else {
-            login.setFuncionario(mapper.map(funcionarioService.findById(
-                    dto.getFuncionarioId()), Funcionario.class));
+            Optional<Funcionario> funcionarioOpt = funcionarioRepository.findById(dto.getFuncionarioId());
+
+            if (funcionarioOpt.isEmpty()) {
+                throw new NotFoundException("Funcionário de id=[" + dto.getFuncionarioId() + "] não encontrado");
+            }
+
+            login.setFuncionario(funcionarioOpt.get());
         }
 
         return mapper.map(loginRepository.save(login), LoginCreateResponseDto.class);

@@ -34,11 +34,11 @@ public class Login implements UserDetails {
     private String password;
 
     @OneToOne
-    @JoinColumn(name = "medico_id")
+    @JoinColumn(name = "medico_id", unique = true)
     private Medico medico;
 
     @OneToOne
-    @JoinColumn(name = "funcionario_id")
+    @JoinColumn(name = "funcionario_id", unique = true)
     private Funcionario funcionario;
 
     @Override

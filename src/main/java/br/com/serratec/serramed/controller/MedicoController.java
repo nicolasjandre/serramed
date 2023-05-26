@@ -19,10 +19,12 @@ import br.com.serratec.serramed.domain.service.MedicoService;
 import br.com.serratec.serramed.dto.medico.MedicoRequestDto;
 import br.com.serratec.serramed.dto.medico.MedicoResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/medico")
+@Tag(name = "Medico", description = "Todos os endpoints relacionados a entidade Medico")
 public class MedicoController implements ICRUDController<MedicoRequestDto, MedicoResponseDto> {
 
     @Autowired
@@ -30,8 +32,7 @@ public class MedicoController implements ICRUDController<MedicoRequestDto, Medic
 
     @Override
     @PostMapping
-    @Operation(summary = "Salva um cadastro de médico no banco de dados.", 
-            description = "Campo 'nome' não pode estar vazio"
+    @Operation(summary = "Salva um cadastro de médico no banco de dados.", description = "Campo 'nome' não pode estar vazio"
             +
             "<br>Campo 'nome' deve ter ao menos 3 caracteres" +
             "<br>Campo 'listaDepartamentoId' não pode ser nulo")
@@ -41,8 +42,7 @@ public class MedicoController implements ICRUDController<MedicoRequestDto, Medic
 
     @Override
     @DeleteMapping("/{id}")
-    @Operation(summary = "Deleta um médico específico do banco buscando-o por ID.", 
-            description = "<strong>Este método espera uma variável ID no URN da URI</strong><br>")
+    @Operation(summary = "Deleta um médico específico do banco buscando-o por ID.", description = "<strong>Este método espera uma variável ID no URN da URI</strong><br>")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         medicoService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
@@ -57,8 +57,7 @@ public class MedicoController implements ICRUDController<MedicoRequestDto, Medic
 
     @Override
     @GetMapping("/{id}")
-    @Operation(summary = "Retorna os dados de um médico específico buscando-o por ID.", 
-            description = "<strong>Este método espera uma variável ID no URN da URI</strong><br>")
+    @Operation(summary = "Retorna os dados de um médico específico buscando-o por ID.", description = "<strong>Este método espera uma variável ID no URN da URI</strong><br>")
     public ResponseEntity<MedicoResponseDto> findById(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(medicoService.findById(id));
 
@@ -66,15 +65,14 @@ public class MedicoController implements ICRUDController<MedicoRequestDto, Medic
 
     @Override
     @PutMapping("/{id}")
-    @Operation(summary = "Atualiza os dados de um médico específico no banco de dados.", 
-            description = "<strong>Este método espera uma variável ID no URN da URI</strong><br>"
+    @Operation(summary = "Atualiza os dados de um médico específico no banco de dados.", description = "<strong>Este método espera uma variável ID no URN da URI</strong><br>"
             +
             "<br>Campo 'nome' não pode estar vazio" +
             "<br>Campo 'nome' deve ter ao menos 3 caracteres" +
             "<br>Campo 'listaDepartamentoId' não pode ser nulo")
     public ResponseEntity<MedicoResponseDto> updateById(@RequestBody @Valid MedicoRequestDto dto,
             @PathVariable Long id) {
-                medicoService.deleteById(id);
+        medicoService.deleteById(id);
         return ResponseEntity.status(HttpStatus.OK).body(medicoService.updateById(dto, id));
     }
 }
