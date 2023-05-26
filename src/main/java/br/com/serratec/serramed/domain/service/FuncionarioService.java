@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import br.com.serratec.serramed.domain.exception.NotFoundException;
 import br.com.serratec.serramed.domain.model.Departamento;
 import br.com.serratec.serramed.domain.model.Funcionario;
+import br.com.serratec.serramed.domain.repository.DepartamentoRepository;
 import br.com.serratec.serramed.domain.repository.FuncionarioRepository;
 import br.com.serratec.serramed.domain.service.icrud.ICRUDService;
 import br.com.serratec.serramed.dto.funcionario.FuncionarioRequestDto;
@@ -23,7 +24,7 @@ public class FuncionarioService implements ICRUDService<FuncionarioRequestDto, F
     private FuncionarioRepository funcionarioRepository;
 
     @Autowired
-    private DepartamentoService departamentoService;
+    private DepartamentoRepository departamentoRepository;
 
     @Autowired
     private ModelMapper mapper;
@@ -33,9 +34,8 @@ public class FuncionarioService implements ICRUDService<FuncionarioRequestDto, F
 
         Funcionario funcionario = mapper.map(dto, Funcionario.class);
 
-        Departamento departamento = mapper.map(departamentoService.findById(dto.getDepartamentoId()),
-                Departamento.class);
-                
+        Departamento departamento = getDepartamento(dto);
+
         funcionario.setDepartamento(departamento);
 
         funcionario.setId(null);
@@ -73,12 +73,21 @@ public class FuncionarioService implements ICRUDService<FuncionarioRequestDto, F
 
         Funcionario funcionario = mapper.map(this.findById(id), Funcionario.class);
 
-        Departamento departamento = mapper.map(departamentoService.findById(dto.getDepartamentoId()),
-                Departamento.class);
-        
-                funcionario.setDepartamento(departamento);
+        Departamento departamento = getDepartamento(dto);
+
+        funcionario.setDepartamento(departamento);
         funcionario.setNome(dto.getNome());
 
         return mapper.map(funcionarioRepository.save(funcionario), FuncionarioResponseDto.class);
+    }
+
+    private Departamento getDepartamento(FuncionarioRequestDto dto) {
+        Optional<Departamento> departamentoOpt = departamentoRepository.findById(dto.getDepartamentoId());
+
+        if (departamentoOpt.isEmpty()) {
+            throw new NotFoundException("Departamento de id=[" + dto.getDepartamentoId() + "] não encontrado");
+        }
+
+        return departamentoOpt.get();
     }
 }

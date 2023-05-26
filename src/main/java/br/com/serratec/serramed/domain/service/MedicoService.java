@@ -1,5 +1,6 @@
 package br.com.serratec.serramed.domain.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import br.com.serratec.serramed.domain.exception.NotFoundException;
 import br.com.serratec.serramed.domain.model.Departamento;
 import br.com.serratec.serramed.domain.model.Medico;
+import br.com.serratec.serramed.domain.repository.DepartamentoRepository;
 import br.com.serratec.serramed.domain.repository.MedicoRepository;
 import br.com.serratec.serramed.domain.service.icrud.ICRUDService;
 import br.com.serratec.serramed.dto.medico.MedicoRequestDto;
@@ -23,7 +25,7 @@ public class MedicoService implements ICRUDService<MedicoRequestDto, MedicoRespo
     private MedicoRepository medicoRepository;
 
     @Autowired
-    private DepartamentoService departamentoService;
+    private DepartamentoRepository departamentoRepository;
 
     @Autowired
     private ModelMapper mapper;
@@ -33,14 +35,12 @@ public class MedicoService implements ICRUDService<MedicoRequestDto, MedicoRespo
 
         Medico medico = new Medico();
 
-        dto.getListaDepartamentoId().forEach(departamentoId -> {
-            Departamento departamento = mapper.map(departamentoService.findById(departamentoId), Departamento.class);
-            medico.addDepartamento(departamento);
-        });
+        List<Departamento> departamentos = getDepartamentos(dto);
         
+        medico.setId(null);
+        medico.setDepartamentos(departamentos);
         medico.setNome(dto.getNome());
 
-        medico.setId(null);
         return mapper.map(medicoRepository.save(medico), MedicoResponseDto.class);
     }
 
@@ -75,12 +75,28 @@ public class MedicoService implements ICRUDService<MedicoRequestDto, MedicoRespo
 
         Medico medico = mapper.map(this.findById(id), Medico.class);
 
-        dto.getListaDepartamentoId().forEach(departamentoId -> {
-            Departamento departamento = mapper.map(departamentoService.findById(departamentoId), Departamento.class);
-            medico.addDepartamento(departamento);
-        });
+        List<Departamento> departamentos = getDepartamentos(dto);
+
+        medico.setDepartamentos(departamentos);
         medico.setNome(dto.getNome());
 
         return mapper.map(medicoRepository.save(medico), MedicoResponseDto.class);
+    }
+
+    private List<Departamento> getDepartamentos(MedicoRequestDto dto) {
+
+        List<Departamento> listaDepartamentos = new ArrayList<>();
+
+        dto.getListaDepartamentoId().forEach(departamentoId -> {
+            Optional<Departamento> departamentoOpt = departamentoRepository.findById(departamentoId);
+
+            if (departamentoOpt.isEmpty()) {
+                throw new NotFoundException("Departamento de id=[" + departamentoId + "] não encontrado");
+            }
+
+            listaDepartamentos.add(departamentoOpt.get());
+        });
+
+        return listaDepartamentos;
     }
 }
