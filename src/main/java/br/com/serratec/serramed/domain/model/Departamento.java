@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -37,9 +38,9 @@ public class Departamento implements Serializable {
     @JoinColumn(name = "hospital_id")
     private Hospital hospital;
 
-    @ManyToMany(mappedBy = "departamentos")
+    @ManyToMany(mappedBy = "departamentos", cascade = CascadeType.ALL)
     private List<Medico> medicos;
 
-    @OneToMany(mappedBy = "departamento")
+    @OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL)
     private List<Funcionario> funcionarios;
 }

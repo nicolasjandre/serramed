@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,12 +31,12 @@ public class Medico implements Serializable {
 
     private String nome;
 
-    @OneToOne(mappedBy = "medico")
+    @OneToOne(mappedBy = "medico", cascade = CascadeType.ALL)
     private Login login;
 
     @ManyToMany
     @JoinTable(name = "medico_departamento", 
-        joinColumns = @JoinColumn(name = "medico_id"), 
+        joinColumns = @JoinColumn(name = "medico_id"),
         inverseJoinColumns = @JoinColumn(name = "departamento_id"))
     private List<Departamento> departamentos = new ArrayList<>();
 

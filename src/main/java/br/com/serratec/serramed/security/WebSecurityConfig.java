@@ -17,43 +17,44 @@ import br.com.serratec.serramed.domain.service.LoginService;
 @Configuration
 public class WebSecurityConfig {
 
-    private static final String[] AUTH_SWAGGER_LIST = {
-            "/v3/api-docs/**",
-            "/swagger-ui/**",
-            "/v2/api-docs/**",
-            "/swagger-resources/**"
-    };
+        private static final String[] AUTH_SWAGGER_LIST = {
+                        "/v3/api-docs/**",
+                        "/swagger-ui/**",
+                        "/v2/api-docs/**",
+                        "/swagger-resources/**"
+        };
 
-    @Bean
-    BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+        @Bean
+        BCryptPasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder();
+        }
 
-    @Bean
-    AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
-            throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
+        @Bean
+        AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+                        throws Exception {
+                return authenticationConfiguration.getAuthenticationManager();
+        }
 
-    @Bean
-    SecurityFilterChain filterChain(HttpSecurity http, JwtUtils jwtUtils, AuthenticationManager authenticationManager,
-            CustomAuthenticationEntryPoint authEntryPoint, LoginService loginService) throws Exception {
+        @Bean
+        SecurityFilterChain filterChain(HttpSecurity http, JwtUtils jwtUtils,
+                        AuthenticationManager authenticationManager,
+                        CustomAuthenticationEntryPoint authEntryPoint, LoginService loginService) throws Exception {
 
-        http
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(AUTH_SWAGGER_LIST).permitAll()
-                        .requestMatchers(HttpMethod.POST, "/login/auth").permitAll()
-                        .anyRequest().authenticated())
-                .cors(cors -> cors.disable())
-                .csrf(csrf -> csrf.disable())
-                .exceptionHandling(handling -> handling
-                        .authenticationEntryPoint(authEntryPoint))
-                .sessionManagement(
-                        sessionManagement -> sessionManagement
-                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilter(new JwtAuthenticationFilter(authenticationManager, jwtUtils))
-                .addFilter(new JwtAuthorizationFilter(authenticationManager, jwtUtils, loginService));
+                http
+                                .authorizeHttpRequests(authorize -> authorize
+                                                .requestMatchers(AUTH_SWAGGER_LIST).permitAll()
+                                                .requestMatchers(HttpMethod.POST, "/login/auth").permitAll()
+                                                .anyRequest().authenticated())
+                                .cors(cors -> cors.disable())
+                                .csrf(csrf -> csrf.disable())
+                                .exceptionHandling(handling -> handling
+                                                .authenticationEntryPoint(authEntryPoint))
+                                .sessionManagement(
+                                                sessionManagement -> sessionManagement
+                                                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                                .addFilter(new JwtAuthenticationFilter(authenticationManager, jwtUtils))
+                                .addFilter(new JwtAuthorizationFilter(authenticationManager, jwtUtils, loginService));
 
-        return http.build();
-    }
+                return http.build();
+        }
 }

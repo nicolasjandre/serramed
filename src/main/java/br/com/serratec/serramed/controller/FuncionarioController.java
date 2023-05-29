@@ -42,7 +42,7 @@ public class FuncionarioController implements ICRUDController<FuncionarioRequest
 
     @Override
     @DeleteMapping("/{id}")
-    @Operation(summary = "Deleta um médico específico do banco buscando-o por ID.", description = "<strong>Este método espera uma variável ID no URN da URI</strong><br>")
+    @Operation(summary = "Deleta um funcionário específico do banco buscando-o por ID.", description = "<strong>Este método espera uma variável ID no URN da URI</strong><br>")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         funcionarioService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
@@ -72,7 +72,6 @@ public class FuncionarioController implements ICRUDController<FuncionarioRequest
             "<br>Campo 'departamentoId' não pode ser nulo")
     public ResponseEntity<FuncionarioResponseDto> updateById(@RequestBody @Valid FuncionarioRequestDto dto,
             @PathVariable Long id) {
-        funcionarioService.deleteById(id);
         return ResponseEntity.status(HttpStatus.OK).body(funcionarioService.updateById(dto, id));
     }
 }

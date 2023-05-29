@@ -46,7 +46,7 @@ public class MedicoService implements ICRUDService<MedicoRequestDto, MedicoRespo
 
     @Override
     public void deleteById(Long id) {
-        this.findById(id);
+        findMedicoByIdAndCheckIfExists(id);
         medicoRepository.deleteById(id);
     }
 
@@ -61,19 +61,15 @@ public class MedicoService implements ICRUDService<MedicoRequestDto, MedicoRespo
     @Override
     public MedicoResponseDto findById(Long id) {
 
-        Optional<Medico> medicoOpt = medicoRepository.findById(id);
+        Medico medico = findMedicoByIdAndCheckIfExists(id);
 
-        if (medicoOpt.isEmpty()) {
-            throw new NotFoundException("Médico de id=[" + id + "] não encontrado");
-        }
-
-        return mapper.map(medicoOpt.get(), MedicoResponseDto.class);
+        return mapper.map(medico, MedicoResponseDto.class);
     }
 
     @Override
     public MedicoResponseDto updateById(MedicoRequestDto dto, Long id) {
 
-        Medico medico = mapper.map(this.findById(id), Medico.class);
+        Medico medico = findMedicoByIdAndCheckIfExists(id);
 
         List<Departamento> departamentos = getDepartamentos(dto);
 
@@ -98,5 +94,16 @@ public class MedicoService implements ICRUDService<MedicoRequestDto, MedicoRespo
         });
 
         return listaDepartamentos;
+    }
+
+    private Medico findMedicoByIdAndCheckIfExists(Long id) {
+        
+        Optional<Medico> medicoOpt = medicoRepository.findById(id);
+
+        if (medicoOpt.isEmpty()) {
+            throw new NotFoundException("Médico de id=[" + id + "] não encontrado");
+        }
+
+        return medicoOpt.get();
     }
 }

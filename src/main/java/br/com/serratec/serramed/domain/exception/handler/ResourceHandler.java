@@ -19,6 +19,7 @@ public class ResourceHandler {
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErrorResponseDto> notFoundException(NotFoundException ex) {
+
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorResponseDto.builder()
                 .message(ex.getMessage())
                 .httpStatus(HttpStatus.NOT_FOUND)
