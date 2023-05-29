@@ -5,6 +5,7 @@ import br.com.serratec.serramed.domain.service.DepartamentoService;
 import br.com.serratec.serramed.dto.derpartamento.DepartamentoRequestDto;
 import br.com.serratec.serramed.dto.derpartamento.DepartamentoResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,8 @@ public class DepartamentoController implements ICRUDController<DepartamentoReque
 	@Override
 	@PutMapping("/{id}")
 	@Operation(summary = "Atualiza todas as propriedades do departamento.", description = "Verifica se o 'ID' passado no parâmetro existe.")
-	public ResponseEntity<DepartamentoResponseDto> updateById(@Valid @RequestBody DepartamentoRequestDto dto,
+	public ResponseEntity<DepartamentoResponseDto> updateById(
+			@Valid @RequestBody @Schema(description = "JSON payload for updating user", example = "{\"nome\":\"Teste\"}") DepartamentoRequestDto dto,
 			@PathVariable Long id) {
 		return ResponseEntity.status(HttpStatus.OK).body(departamentoService.updateById(dto, id));
 	}

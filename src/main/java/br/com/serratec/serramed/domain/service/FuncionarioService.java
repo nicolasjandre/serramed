@@ -44,7 +44,11 @@ public class FuncionarioService implements ICRUDService<FuncionarioRequestDto, F
 
     @Override
     public void deleteById(Long id) {
-        this.findById(id);
+
+        Funcionario funcionario = findByIdAndCheckIfExists(id);
+
+        funcionario.getDepartamento().getFuncionarios().remove(funcionario);
+
         funcionarioRepository.deleteById(id);
     }
 
@@ -59,19 +63,15 @@ public class FuncionarioService implements ICRUDService<FuncionarioRequestDto, F
     @Override
     public FuncionarioResponseDto findById(Long id) {
 
-        Optional<Funcionario> funcionarioOpt = funcionarioRepository.findById(id);
+        Funcionario funcionario = findByIdAndCheckIfExists(id);
 
-        if (funcionarioOpt.isEmpty()) {
-            throw new NotFoundException("Funcionário de id=[" + id + "] não encontrado");
-        }
-
-        return mapper.map(funcionarioOpt.get(), FuncionarioResponseDto.class);
+        return mapper.map(funcionario, FuncionarioResponseDto.class);
     }
 
     @Override
     public FuncionarioResponseDto updateById(FuncionarioRequestDto dto, Long id) {
 
-        Funcionario funcionario = mapper.map(this.findById(id), Funcionario.class);
+        Funcionario funcionario = findByIdAndCheckIfExists(id);
 
         Departamento departamento = getDepartamento(dto);
 
@@ -82,6 +82,7 @@ public class FuncionarioService implements ICRUDService<FuncionarioRequestDto, F
     }
 
     private Departamento getDepartamento(FuncionarioRequestDto dto) {
+        
         Optional<Departamento> departamentoOpt = departamentoRepository.findById(dto.getDepartamentoId());
 
         if (departamentoOpt.isEmpty()) {
@@ -89,5 +90,16 @@ public class FuncionarioService implements ICRUDService<FuncionarioRequestDto, F
         }
 
         return departamentoOpt.get();
+    }
+
+    private Funcionario findByIdAndCheckIfExists(Long id) {
+        
+        Optional<Funcionario> funcionarioOpt = funcionarioRepository.findById(id);
+
+        if (funcionarioOpt.isEmpty()) {
+            throw new NotFoundException("Funcionário de id=[" + id + "] não encontrado");
+        }
+
+        return funcionarioOpt.get();
     }
 }

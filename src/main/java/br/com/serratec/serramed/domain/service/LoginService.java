@@ -90,9 +90,56 @@ public class LoginService implements UserDetailsService {
         return mapper.map(loginRepository.save(login), LoginCreateResponseDto.class);
     }
 
+    public LoginCreateResponseDto update(LoginCreateRequestDto dto, Long id) {
+
+        Login login = findLoginByIdAndCheckIfExists(id);
+
+        if (Objects.nonNull(dto.getMedicoId()) || Objects.nonNull(dto.getFuncionarioId())) {
+            throw new BadRequestException(
+                    "Campos 'medicoId' e 'funcionarioId' precisam ser nulos: não é possível alterar o dono do login");
+        }
+
+        if (!dto.getPassword().equals(dto.getPasswordConfirmation())) {
+            throw new BadRequestException("A senha e a confirmação de senha precisam ser iguais");
+        }
+
+        login.setEmail(dto.getEmail());
+        login.setPassword(passwordEncoder.encode(dto.getPassword()));
+
+        return mapper.map(loginRepository.save(login), LoginCreateResponseDto.class);
+    }
+
     public List<LoginCreateResponseDto> findAll() {
         return loginRepository.findAll().stream()
                 .map(login -> mapper.map(login, LoginCreateResponseDto.class))
                 .collect(Collectors.toList());
+    }
+
+    public LoginCreateResponseDto findById(Long id) {
+
+        return mapper.map(findLoginByIdAndCheckIfExists(id), LoginCreateResponseDto.class);
+    }
+
+    public void deleteById(Long id) {
+        Login login = findLoginByIdAndCheckIfExists(id);
+
+        if (Objects.nonNull(login.getMedico())) {
+            login.getMedico().setLogin(null);
+        } else if (Objects.nonNull(login.getFuncionario())) {
+            login.getFuncionario().setLogin(null);
+        }
+
+        loginRepository.deleteById(id);
+    }
+
+    private Login findLoginByIdAndCheckIfExists(Long id) {
+
+        Optional<Login> loginOpt = loginRepository.findById(id);
+
+        if (loginOpt.isEmpty()) {
+            throw new NotFoundException("Login de id=[" + id + "] não encontrado");
+        }
+
+        return loginOpt.get();
     }
 }

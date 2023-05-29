@@ -2,8 +2,7 @@ package br.com.serratec.serramed.domain.model;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -30,11 +29,10 @@ public class Funcionario implements Serializable {
 
     private String nome;
 
-    @OneToOne(mappedBy = "funcionario")
+    @OneToOne(mappedBy = "funcionario", cascade = CascadeType.ALL)
     private Login login;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "departamento_id")
-    @JsonManagedReference
     private Departamento departamento;
 }

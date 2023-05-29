@@ -5,8 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,5 +39,27 @@ public class LoginController {
     @Operation(summary = "Retorna todos os logins cadastrados")
     public ResponseEntity<List<LoginCreateResponseDto>> create() {
         return ResponseEntity.status(HttpStatus.OK).body(loginService.findAll());
+    }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Atualiza o login do usuário")
+    public ResponseEntity<LoginCreateResponseDto> update(@Valid @RequestBody LoginCreateRequestDto dto,
+            @PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(loginService.update(dto, id));
+    }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "Retorna o login baseado no id digitado")
+    public ResponseEntity<LoginCreateResponseDto> findById(
+            @PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(loginService.findById(id));
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Deleta o login do ID digitado")
+    public ResponseEntity<Void> delete(
+            @PathVariable Long id) {
+        loginService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 }

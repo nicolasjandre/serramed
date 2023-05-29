@@ -36,12 +36,12 @@ public class JwtUtils {
             Key secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
 
             return Jwts.builder()
-                    .setIssuer("Serramed API")
-                    .setSubject(login.getEmail())
+                    .setIssuer("Serramed API") 
+                    .setSubject(login.getEmail()) 
                     .setIssuedAt(new Date())
-                    .setExpiration(expirationDate)
-                    .signWith(secretKey)
-                    .compact();
+                    .setExpiration(expirationDate) 
+                    .signWith(secretKey) 
+                    .compact(); 
         } catch (Exception ex) {
             return null;
         }
