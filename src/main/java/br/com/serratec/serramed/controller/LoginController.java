@@ -37,7 +37,7 @@ public class LoginController {
 
     @GetMapping
     @Operation(summary = "Retorna todos os logins cadastrados")
-    public ResponseEntity<List<LoginCreateResponseDto>> create() {
+    public ResponseEntity<List<LoginCreateResponseDto>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(loginService.findAll());
     }
 

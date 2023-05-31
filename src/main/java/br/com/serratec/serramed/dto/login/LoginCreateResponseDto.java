@@ -17,9 +17,9 @@ public class LoginCreateResponseDto {
 
     private String email;
 
-    @JsonIgnoreProperties({ "login", "departamentos" })
+    @JsonIgnoreProperties({ "departamentos" })
     private MedicoResponseDto medico;
 
-    @JsonIgnoreProperties({ "login", "departamento" })
+    @JsonIgnoreProperties({ "departamento" })
     private FuncionarioResponseDto funcionario;
 }
